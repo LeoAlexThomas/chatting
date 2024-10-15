@@ -1,9 +1,11 @@
 import ChatInfo from "@/components/ChatInfo";
 import ChatList from "@/components/ChatList";
-import { Box, Center, Grid, Stack } from "@mantine/core";
+import { Box, Center, Group, Input, Stack } from "@mantine/core";
 import Head from "next/head";
+import { useState } from "react";
 
 export default function Home() {
+  const [searchText, setSearchText] = useState<string>("");
   return (
     <>
       <Head>
@@ -29,21 +31,25 @@ export default function Home() {
             borderRadius: 16,
           }}
         >
-          <Grid columns={5} w="100%" h="100%">
-            <Grid.Col
+          <Group wrap="nowrap" w="100%" h="100%">
+            <Stack
+              gap={16}
+              h="100%"
+              w={550}
               style={{
-                borderRight: "1px solid #000000",
+                overflowY: "auto",
               }}
-              span={2}
             >
-              <Stack>
-                <ChatList />
-              </Stack>
-            </Grid.Col>
-            <Grid.Col span="auto">
-              <ChatInfo />
-            </Grid.Col>
-          </Grid>
+              <Input
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                placeholder="Search People ..."
+              />
+
+              <ChatList searchText={searchText} />
+            </Stack>
+            <ChatInfo />
+          </Group>
         </Center>
       </Box>
     </>

@@ -4,6 +4,7 @@ import { Avatar, Group, Stack, Text } from "@mantine/core";
 import isNil from "lodash/isNil";
 import { IconPhoto, IconVideo } from "@tabler/icons-react";
 import dayjs from "dayjs";
+import { TextDecoderStream } from "stream/web";
 
 const PersonChatCard = ({ chat }: { chat: PersonChatInfoInterface }) => {
   const user = chat.user;
@@ -15,11 +16,27 @@ const PersonChatCard = ({ chat }: { chat: PersonChatInfoInterface }) => {
     }
     switch (message.type) {
       case MessageTypeEnum.image:
-        return <IconPhoto size="20px" />;
+        return (
+          <Group wrap="nowrap" gap={8}>
+            <IconPhoto
+              size="20px"
+              color="var(--mantine-color-primary-gray-6)"
+            />
+            <MessageText text="Image" />
+          </Group>
+        );
       case MessageTypeEnum.video:
-        return <IconVideo size="20px" />;
+        return (
+          <Group wrap="nowrap" gap={8}>
+            <IconVideo
+              size="20px"
+              color="var(--mantine-color-primary-gray-6)"
+            />
+            <MessageText text="Video" />
+          </Group>
+        );
       default:
-        return <Text>{message.message}</Text>;
+        return <MessageText text={message.message} />;
     }
   };
 
@@ -32,7 +49,7 @@ const PersonChatCard = ({ chat }: { chat: PersonChatInfoInterface }) => {
       .subtract(1, "day")
       .isSame(dayjs(message.messageTime), "date");
     return (
-      <Text>
+      <Text fz={12} lh="1.16" c="primary-gray.3">
         {isToday
           ? dayjs(message.messageTime).format("hh:MM A")
           : isYesterday
@@ -43,22 +60,32 @@ const PersonChatCard = ({ chat }: { chat: PersonChatInfoInterface }) => {
   };
 
   return (
-    <Group gap={16} w="100%" bg="blue">
-      <Avatar name={user.userName} src={user.profileImage} size="lg" />
+    <Group wrap="nowrap" gap={16} w="100%" p={4}>
+      <Avatar name={user.userName} src={user.profileImage} size={50} />
       <Stack
-        gap={10}
-        bg="red"
+        gap={6}
+        w="100%"
         style={{
-          alignSelf: "stretch",
+          alignSelf: "center",
         }}
       >
         <Group wrap="nowrap" justify="space-between">
-          <Text>{user.userName}</Text>
+          <Text fz={16} fw={700} lh="1.21" color="black">
+            {user.userName}
+          </Text>
           {renderMessageTime()}
         </Group>
         {renderLastMessage()}
       </Stack>
     </Group>
+  );
+};
+
+const MessageText = ({ text }: { text: string }) => {
+  return (
+    <Text fz={14} lh="1.25" c="primary-gray.6">
+      {text}
+    </Text>
   );
 };
 

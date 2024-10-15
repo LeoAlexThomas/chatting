@@ -1,9 +1,10 @@
 import { PersonChatInfoInterface } from "@/types/chat";
 import { MessageTypeEnum } from "@/types/message";
-import { Group, Stack } from "@mantine/core";
+import { Stack } from "@mantine/core";
 import dayjs from "dayjs";
 import { Fragment } from "react";
 import PersonChatCard from "@/components/PrivateChatCard";
+import isEmpty from "lodash/isEmpty";
 
 const CHATLIST: PersonChatInfoInterface[] = [
   {
@@ -129,18 +130,53 @@ const CHATLIST: PersonChatInfoInterface[] = [
       message: "Hai, Welcome Leo",
     },
   },
+  {
+    user: {
+      userId: "9",
+      userName: "Thomas Xavier",
+    },
+    lastMessage: {
+      id: "message9",
+      isDelivered: false,
+      isRead: false,
+      messageTime: dayjs().subtract(2, "weeks").toISOString(),
+      type: MessageTypeEnum.text,
+      message: "Hai, Welcome",
+    },
+  },
+  {
+    user: {
+      userId: "10",
+      userName: "Kala",
+    },
+    lastMessage: {
+      id: "message10",
+      isDelivered: false,
+      isRead: false,
+      messageTime: dayjs().subtract(4, "days").toISOString(),
+      type: MessageTypeEnum.text,
+      message: "Hai, Welcome Leo",
+    },
+  },
 ];
 
-const ChatList = () => {
-  return CHATLIST.map((chat) => {
-    return (
-      <Stack gap={12}>
-        <Fragment key={chat.user.userId}>
-          <PersonChatCard chat={chat} />
-        </Fragment>
-      </Stack>
-    );
-  });
+const ChatList = ({ searchText }: { searchText: string }) => {
+  const filteredList = CHATLIST.filter(
+    (chat) =>
+      isEmpty(searchText) ||
+      chat.user.userName.toLowerCase().includes(searchText.toLowerCase())
+  );
+  return (
+    <Stack gap={12} h="100%">
+      {filteredList.map((chat) => {
+        return (
+          <Fragment key={chat.user.userId}>
+            <PersonChatCard chat={chat} />
+          </Fragment>
+        );
+      })}
+    </Stack>
+  );
 };
 
 export default ChatList;
