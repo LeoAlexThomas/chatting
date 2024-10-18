@@ -1,27 +1,33 @@
 import { useUserInfo } from "@/context/UserProvider";
-import { Avatar, Menu, Stack, Text } from "@mantine/core";
+import { Avatar, Popover, Stack, Text } from "@mantine/core";
 
 const UserAvatar = () => {
   const userData = useUserInfo();
   return (
-    <Menu width={300}>
-      <Menu.Target>
+    <Popover width={300} withArrow position="bottom-end">
+      <Popover.Target>
         <Avatar
           name={userData.userName}
           src={userData.profileImage}
           size="md"
         />
-      </Menu.Target>
-      <Menu.Dropdown>
-        <Menu.Item>
-          <Stack gap={8}>
-            <Text>{userData.userName}</Text>
-            {userData.userEmail && <Text>{userData.userEmail}</Text>}
-            <Text>{userData.mobile}</Text>
-          </Stack>
-        </Menu.Item>
-      </Menu.Dropdown>
-    </Menu>
+      </Popover.Target>
+      <Popover.Dropdown maw={200}>
+        <Stack gap={2}>
+          <Text fz={16} fw={500}>
+            {userData.userName}
+          </Text>
+          {userData.userEmail && (
+            <Text fz={12} c="primary-gray.3">
+              {userData.userEmail}
+            </Text>
+          )}
+          <Text fz={12} c="primary-gray.3">
+            {userData.mobile}
+          </Text>
+        </Stack>
+      </Popover.Dropdown>
+    </Popover>
   );
 };
 
