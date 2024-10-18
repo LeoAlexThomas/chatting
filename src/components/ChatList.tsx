@@ -1,12 +1,12 @@
-import { PersonChatInfoInterface } from "@/types/chat";
-import { MessageTypeEnum } from "@/types/message";
 import { Stack } from "@mantine/core";
-import dayjs from "dayjs";
 import { Fragment } from "react";
 import PersonChatCard from "@/components/PrivateChatCard";
-import isEmpty from "lodash/isEmpty";
+import WithLoader from "./WithLoader";
+import { PersonChatInfoInterface } from "@/types/chat";
+import { MessageTypeEnum } from "@/types/message";
+import dayjs from "dayjs";
 
-const CHATLIST: PersonChatInfoInterface[] = [
+const dummyChatList: PersonChatInfoInterface[] = [
   {
     user: {
       userId: "1",
@@ -20,6 +20,7 @@ const CHATLIST: PersonChatInfoInterface[] = [
       messageTime: dayjs().toISOString(),
       type: MessageTypeEnum.text,
       message: "Hai, Welcome Leo",
+      isOpened: false,
     },
   },
   {
@@ -35,6 +36,7 @@ const CHATLIST: PersonChatInfoInterface[] = [
       type: MessageTypeEnum.image,
       image:
         "https://cdn.prod.website-files.com/63e857eaeaf853471d5335ff/63e8c4e52d6553668075697e_hand%20bag-min.png",
+      isOpened: true,
     },
   },
   {
@@ -50,6 +52,7 @@ const CHATLIST: PersonChatInfoInterface[] = [
       messageTime: dayjs().subtract(1, "week").toISOString(),
       type: MessageTypeEnum.text,
       message: "Bye Leo",
+      isOpened: false,
     },
   },
   {
@@ -65,6 +68,7 @@ const CHATLIST: PersonChatInfoInterface[] = [
       type: MessageTypeEnum.video,
       video:
         "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+      isOpened: false,
     },
   },
   {
@@ -81,6 +85,7 @@ const CHATLIST: PersonChatInfoInterface[] = [
       messageTime: dayjs().subtract(2, "days").toISOString(),
       type: MessageTypeEnum.text,
       message: "Hai da, Eppo v2ku varuva?",
+      isOpened: true,
     },
   },
   {
@@ -96,6 +101,7 @@ const CHATLIST: PersonChatInfoInterface[] = [
       type: MessageTypeEnum.image,
       image:
         "https://cdn.prod.website-files.com/63e857eaeaf853471d5335ff/63e8c4e52d6553668075697e_hand%20bag-min.png",
+      isOpened: false,
     },
   },
   {
@@ -112,6 +118,7 @@ const CHATLIST: PersonChatInfoInterface[] = [
       messageTime: dayjs().subtract(2, "hours").toISOString(),
       type: MessageTypeEnum.text,
       message: "Dai enga iruka?",
+      isOpened: false,
     },
   },
   {
@@ -128,6 +135,7 @@ const CHATLIST: PersonChatInfoInterface[] = [
       messageTime: dayjs().subtract(2, "months").toISOString(),
       type: MessageTypeEnum.text,
       message: "Hai, Welcome Leo",
+      isOpened: true,
     },
   },
   {
@@ -142,6 +150,7 @@ const CHATLIST: PersonChatInfoInterface[] = [
       messageTime: dayjs().subtract(2, "weeks").toISOString(),
       type: MessageTypeEnum.text,
       message: "Hai, Welcome",
+      isOpened: false,
     },
   },
   {
@@ -156,25 +165,122 @@ const CHATLIST: PersonChatInfoInterface[] = [
       messageTime: dayjs().subtract(4, "days").toISOString(),
       type: MessageTypeEnum.text,
       message: "Hai, Welcome Leo",
+      isOpened: false,
+    },
+  },
+  {
+    user: {
+      userId: "11",
+      userName: "Kishore Kumaran",
+    },
+    lastMessage: {
+      id: "message11",
+      isDelivered: true,
+      isRead: false,
+      messageTime: dayjs().subtract(1, "month").toISOString(),
+      type: MessageTypeEnum.image,
+      image:
+        "https://cdn.prod.website-files.com/63e857eaeaf853471d5335ff/63e8c4e52d6553668075697e_hand%20bag-min.png",
+      isOpened: false,
+    },
+  },
+  {
+    user: {
+      userId: "12",
+      userName: "Sathya",
+      profileImage:
+        "https://scontent.fmaa3-2.fna.fbcdn.net/v/t39.30808-1/356620157_6539115922842369_6995869315804903516_n.jpg?stp=dst-jpg_s200x200&_nc_cat=100&ccb=1-7&_nc_sid=0ecb9b&_nc_ohc=SItp2atBUwAQ7kNvgF1Jaiy&_nc_zt=24&_nc_ht=scontent.fmaa3-2.fna&_nc_gid=AjHi6VhyO0lpJvv6W3KUwJD&oh=00_AYDGy99Bgv9gfbCkGl12V9SSpxqF8sHiRzg1dBs93ermmw&oe=6713BCCB",
+    },
+    lastMessage: {
+      id: "message12",
+      isDelivered: true,
+      isRead: true,
+      messageTime: dayjs().subtract(2, "hours").toISOString(),
+      type: MessageTypeEnum.text,
+      message: "Hello?",
+      isOpened: false,
+    },
+  },
+  {
+    user: {
+      userId: "13",
+      userName: "Harish",
+      profileImage:
+        "https://scontent.fmaa3-3.fna.fbcdn.net/v/t39.30808-6/309835235_2423285864477576_7053737427105736517_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=ovD9_LgNlFcQ7kNvgHBCQKz&_nc_zt=23&_nc_ht=scontent.fmaa3-3.fna&_nc_gid=Ama-QUObtzreuCZmC_sS6Lo&oh=00_AYDF8x2na79FEUcgZ2Mv0-xoEbzJV90w6hknHBP1-Sm36w&oe=6713D41A",
+    },
+    lastMessage: {
+      id: "message13",
+      isDelivered: true,
+      isRead: false,
+      messageTime: dayjs().subtract(2, "months").toISOString(),
+      type: MessageTypeEnum.text,
+      message: "Hai, Welcome Leo",
+      isOpened: false,
+    },
+  },
+  {
+    user: {
+      userId: "14",
+      userName: "Thomas Xavier",
+    },
+    lastMessage: {
+      id: "message14",
+      isDelivered: false,
+      isRead: false,
+      messageTime: dayjs().subtract(2, "weeks").toISOString(),
+      type: MessageTypeEnum.text,
+      message: "Hai, Welcome",
+      isOpened: false,
+    },
+  },
+  {
+    user: {
+      userId: "15",
+      userName: "Kala",
+    },
+    lastMessage: {
+      id: "message15",
+      isDelivered: false,
+      isRead: false,
+      messageTime: dayjs().subtract(4, "days").toISOString(),
+      type: MessageTypeEnum.text,
+      message: "Hai, Welcome Leo",
+      isOpened: false,
     },
   },
 ];
 
 const ChatList = ({ searchText }: { searchText: string }) => {
-  const filteredList = CHATLIST.filter(
-    (chat) =>
-      isEmpty(searchText) ||
-      chat.user.userName.toLowerCase().includes(searchText.toLowerCase())
-  );
   return (
-    <Stack gap={12} h="100%">
-      {filteredList.map((chat) => {
+    <Stack
+      gap={8}
+      h="100%"
+      style={{
+        overflow: "auto",
+      }}
+    >
+      {dummyChatList.map((chat) => {
         return (
           <Fragment key={chat.user.userId}>
             <PersonChatCard chat={chat} />
           </Fragment>
         );
       })}
+      {/* <WithLoader apiUrl={`/chat/recent/?searchText=${searchText}`}>
+        {({ data }: { data: PersonChatInfoInterface[] }) => {
+          return (
+            <>
+              {data.map((chat) => {
+                return (
+                  <Fragment key={chat.user.userId}>
+                    <PersonChatCard chat={chat} />
+                  </Fragment>
+                );
+              })}
+            </>
+          );
+        }}
+      </WithLoader> */}
     </Stack>
   );
 };

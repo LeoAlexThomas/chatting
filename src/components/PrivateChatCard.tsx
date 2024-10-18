@@ -2,9 +2,13 @@ import { PersonChatInfoInterface } from "@/types/chat";
 import { MessageTypeEnum } from "@/types/message";
 import { Avatar, Group, Stack, Text } from "@mantine/core";
 import isNil from "lodash/isNil";
-import { IconPhoto, IconVideo } from "@tabler/icons-react";
+import {
+  IconPhoto,
+  IconVideo,
+  IconCheck,
+  IconChecks,
+} from "@tabler/icons-react";
 import dayjs from "dayjs";
-import { TextDecoderStream } from "stream/web";
 
 const PersonChatCard = ({ chat }: { chat: PersonChatInfoInterface }) => {
   const user = chat.user;
@@ -18,6 +22,11 @@ const PersonChatCard = ({ chat }: { chat: PersonChatInfoInterface }) => {
       case MessageTypeEnum.image:
         return (
           <Group wrap="nowrap" gap={8}>
+            <MessageCheck
+              showNotificationCheck={message.isDelivered}
+              showReadCheck={message.isRead}
+            />
+
             <IconPhoto
               size="20px"
               color="var(--mantine-color-primary-gray-6)"
@@ -28,6 +37,11 @@ const PersonChatCard = ({ chat }: { chat: PersonChatInfoInterface }) => {
       case MessageTypeEnum.video:
         return (
           <Group wrap="nowrap" gap={8}>
+            <MessageCheck
+              showNotificationCheck={message.isDelivered}
+              showReadCheck={message.isRead}
+            />
+
             <IconVideo
               size="20px"
               color="var(--mantine-color-primary-gray-6)"
@@ -36,7 +50,15 @@ const PersonChatCard = ({ chat }: { chat: PersonChatInfoInterface }) => {
           </Group>
         );
       default:
-        return <MessageText text={message.message} />;
+        return (
+          <Group wrap="nowrap" gap={8}>
+            <MessageCheck
+              showNotificationCheck={message.isDelivered}
+              showReadCheck={message.isRead}
+            />
+            <MessageText text={message.message} />
+          </Group>
+        );
     }
   };
 
@@ -60,8 +82,24 @@ const PersonChatCard = ({ chat }: { chat: PersonChatInfoInterface }) => {
   };
 
   return (
-    <Group wrap="nowrap" gap={16} w="100%" p={4}>
-      <Avatar name={user.userName} src={user.profileImage} size={50} />
+    <Group
+      wrap="nowrap"
+      gap={16}
+      w="100%"
+      p={8}
+      bg={message?.isOpened === true ? "transparent" : "primary-gray.1"}
+      style={{
+        borderRadius: 12,
+      }}
+    >
+      <Avatar
+        name={user.userName}
+        src={user.profileImage}
+        size={50}
+        style={{
+          boxShadow: "0px 0px 10px #00000050",
+        }}
+      />
       <Stack
         gap={6}
         w="100%"
@@ -87,6 +125,29 @@ const MessageText = ({ text }: { text: string }) => {
       {text}
     </Text>
   );
+};
+
+const MessageCheck = ({
+  showNotificationCheck,
+  showReadCheck,
+}: {
+  showNotificationCheck: boolean;
+  showReadCheck: boolean;
+}) => {
+  if (showNotificationCheck) {
+    return (
+      <IconChecks
+        size={20}
+        color={
+          showReadCheck
+            ? "var(--mantine-color-primary-blue-5)"
+            : "var(--mantine-color-primary-gray-3)"
+        }
+      />
+    );
+  }
+
+  return <IconCheck size={20} color="var(--mantine-color-primary-gray-3)" />;
 };
 
 export default PersonChatCard;

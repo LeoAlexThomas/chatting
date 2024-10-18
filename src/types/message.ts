@@ -9,6 +9,7 @@ interface CommonMessageInterface {
   messageTime: string;
   isRead: boolean;
   isDelivered: boolean;
+  isOpened: boolean;
 }
 
 export interface TextMessageInterface extends CommonMessageInterface {

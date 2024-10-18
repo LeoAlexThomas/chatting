@@ -33,19 +33,17 @@ export default function Home() {
           }}
         >
           <Group wrap="nowrap" w="100%" h="100%">
-            <Stack
-              gap={16}
-              h="100%"
-              w={550}
-              style={{
-                overflowY: "auto",
-              }}
-            >
+            <Stack gap={16} h="100%" w={550}>
               <Group wrap="nowrap">
                 <Input
                   value={searchText}
                   onChange={(e) => setSearchText(e.target.value)}
                   placeholder="Search People ..."
+                  w="100%"
+                  fz={16}
+                  style={{
+                    borderRadius: 12,
+                  }}
                 />
                 <UserAvatar />
               </Group>

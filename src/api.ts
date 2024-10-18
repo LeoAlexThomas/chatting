@@ -1,8 +1,18 @@
 import axios from "axios";
 import { getApiUrl } from "env";
 import { parseCookies } from "nookies";
+import { UserInterface } from "@/types/user";
 
 export const userTokenCookiesName = "token_user";
+
+const dummyUser: UserInterface = {
+  userId: "1",
+  userName: "Leo Alex Thomas",
+  mobile: "9080805641",
+  profileImage: "https://leoalex.in/images/leoProfileAnimated.webp",
+  profileStatus: "Hi, there I'm using whatsapp",
+  userEmail: "leoalex960@gmail.com",
+};
 
 export const getAccessToken = (option: any) => {
   const cookies = parseCookies(option && option.context);
@@ -22,6 +32,9 @@ const api = (url: string, config?: any, baseUrl?: string) => {
     }
     return request;
   });
+  if (url === "/user/info") {
+    return dummyUser;
+  }
 
   return axios({
     url: apiBaseUrl + url,
