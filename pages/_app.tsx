@@ -4,11 +4,23 @@ import { MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
 import type { AppProps } from "next/app";
 import theme from "theme";
+import { SWRConfig } from "swr";
+import api from "@/api";
+import UserProvider from "@/context/UserProvider";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <MantineProvider theme={theme}>
-      <Component {...pageProps} />
-    </MantineProvider>
+    <SWRConfig
+      value={{
+        refreshInterval: 5000,
+        fetcher: api,
+      }}
+    >
+      <MantineProvider theme={theme}>
+        <UserProvider>
+          <Component {...pageProps} />
+        </UserProvider>
+      </MantineProvider>
+    </SWRConfig>
   );
 }

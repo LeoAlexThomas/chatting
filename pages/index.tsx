@@ -1,5 +1,6 @@
 import ChatInfo from "@/components/ChatInfo";
 import ChatList from "@/components/ChatList";
+import UserAvatar from "@/components/UserAvatar";
 import { Box, Center, Group, Input, Stack } from "@mantine/core";
 import Head from "next/head";
 import { useState } from "react";
@@ -40,11 +41,14 @@ export default function Home() {
                 overflowY: "auto",
               }}
             >
-              <Input
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-                placeholder="Search People ..."
-              />
+              <Group wrap="nowrap">
+                <Input
+                  value={searchText}
+                  onChange={(e) => setSearchText(e.target.value)}
+                  placeholder="Search People ..."
+                />
+                <UserAvatar />
+              </Group>
 
               <ChatList searchText={searchText} />
             </Stack>
