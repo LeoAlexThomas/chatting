@@ -1,3 +1,5 @@
+import { MiniUserInterface } from "./user";
+
 export enum MessageTypeEnum {
   text = "text",
   video = "video",
@@ -10,6 +12,7 @@ interface CommonMessageInterface {
   isRead: boolean;
   isDelivered: boolean;
   isOpened: boolean;
+  messageOwner: MiniUserInterface;
 }
 
 export interface TextMessageInterface extends CommonMessageInterface {
