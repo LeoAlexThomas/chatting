@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
 import { getApiUrl } from "env";
 import { parseCookies } from "nookies";
 import { UserInterface } from "@/types/user";
@@ -14,19 +14,19 @@ const dummyUser: UserInterface = {
   userEmail: "leoalex960@gmail.com",
 };
 
-export const getAccessToken = (option: any) => {
-  const cookies = parseCookies(option && option.context);
+export const getAccessToken = () => {
+  const cookies = parseCookies();
   const token = cookies[userTokenCookiesName];
   return token;
 };
 
-const api = (url: string, config?: any, baseUrl?: string) => {
+const api = (url: string, config?: AxiosRequestConfig, baseUrl?: string) => {
   const apiRequestOption = Object.assign({}, config);
   const apiBaseUrl = baseUrl ?? getApiUrl();
 
   // middleware to get access token if present
-  axios.interceptors.request.use((request: any) => {
-    const token = getAccessToken(config);
+  axios.interceptors.request.use((request: InternalAxiosRequestConfig) => {
+    const token = getAccessToken();
     if (token && !request.headers["Authorization"]) {
       request.headers["Authorization"] = `Bearer ${token}`;
     }

@@ -1,13 +1,12 @@
-import { Stack } from "@mantine/core";
-import { Fragment } from "react";
+import { Flex, Stack } from "@mantine/core";
 import PersonChatCard from "@/components/PrivateChatCard";
-import WithLoader from "./WithLoader";
 import { PersonChatInfoInterface } from "@/types/chat";
 import { MessageTypeEnum } from "@/types/message";
 import dayjs from "dayjs";
 
 const dummyChatList: PersonChatInfoInterface[] = [
   {
+    roomId: 1,
     user: {
       userId: "1",
       userName: "John",
@@ -24,6 +23,7 @@ const dummyChatList: PersonChatInfoInterface[] = [
     },
   },
   {
+    roomId: 2,
     user: {
       userId: "2",
       userName: "John Joe",
@@ -40,6 +40,7 @@ const dummyChatList: PersonChatInfoInterface[] = [
     },
   },
   {
+    roomId: 3,
     user: {
       userId: "3",
       userName: "Dhandraj",
@@ -56,6 +57,7 @@ const dummyChatList: PersonChatInfoInterface[] = [
     },
   },
   {
+    roomId: 4,
     user: {
       userId: "4",
       userName: "Sam Xavier",
@@ -72,6 +74,7 @@ const dummyChatList: PersonChatInfoInterface[] = [
     },
   },
   {
+    roomId: 5,
     user: {
       userId: "5",
       userName: "Manoj Murali",
@@ -89,6 +92,7 @@ const dummyChatList: PersonChatInfoInterface[] = [
     },
   },
   {
+    roomId: 6,
     user: {
       userId: "6",
       userName: "Kishore Kumaran",
@@ -105,6 +109,7 @@ const dummyChatList: PersonChatInfoInterface[] = [
     },
   },
   {
+    roomId: 7,
     user: {
       userId: "7",
       userName: "Sathya Narayanan",
@@ -122,6 +127,7 @@ const dummyChatList: PersonChatInfoInterface[] = [
     },
   },
   {
+    roomId: 8,
     user: {
       userId: "8",
       userName: "Harish Kumar",
@@ -139,6 +145,7 @@ const dummyChatList: PersonChatInfoInterface[] = [
     },
   },
   {
+    roomId: 9,
     user: {
       userId: "9",
       userName: "Thomas Xavier",
@@ -154,6 +161,7 @@ const dummyChatList: PersonChatInfoInterface[] = [
     },
   },
   {
+    roomId: 10,
     user: {
       userId: "10",
       userName: "Kala",
@@ -169,6 +177,7 @@ const dummyChatList: PersonChatInfoInterface[] = [
     },
   },
   {
+    roomId: 11,
     user: {
       userId: "11",
       userName: "Kishore Kumaran",
@@ -185,6 +194,7 @@ const dummyChatList: PersonChatInfoInterface[] = [
     },
   },
   {
+    roomId: 12,
     user: {
       userId: "12",
       userName: "Sathya",
@@ -202,6 +212,7 @@ const dummyChatList: PersonChatInfoInterface[] = [
     },
   },
   {
+    roomId: 13,
     user: {
       userId: "13",
       userName: "Harish",
@@ -219,6 +230,7 @@ const dummyChatList: PersonChatInfoInterface[] = [
     },
   },
   {
+    roomId: 14,
     user: {
       userId: "14",
       userName: "Thomas Xavier",
@@ -234,6 +246,7 @@ const dummyChatList: PersonChatInfoInterface[] = [
     },
   },
   {
+    roomId: 15,
     user: {
       userId: "15",
       userName: "Kala",
@@ -250,7 +263,13 @@ const dummyChatList: PersonChatInfoInterface[] = [
   },
 ];
 
-const ChatList = ({ searchText }: { searchText: string }) => {
+const ChatList = ({
+  searchText,
+  onSelect,
+}: {
+  searchText: string;
+  onSelect: (val: number) => void;
+}) => {
   return (
     <Stack
       gap={8}
@@ -261,9 +280,13 @@ const ChatList = ({ searchText }: { searchText: string }) => {
     >
       {dummyChatList.map((chat) => {
         return (
-          <Fragment key={chat.user.userId}>
+          <Flex
+            w="100%"
+            key={chat.user.userId}
+            onClick={() => onSelect(chat.roomId)}
+          >
             <PersonChatCard chat={chat} />
-          </Fragment>
+          </Flex>
         );
       })}
       {/* <WithLoader apiUrl={`/chat/recent/?searchText=${searchText}`}>
