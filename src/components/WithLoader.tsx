@@ -2,7 +2,13 @@ import useSWR from "swr";
 import ErrorMsg from "./ErrorMsg";
 import { Loader } from "@mantine/core";
 
-function WithLoader<T>(apiUrl: string, children: (data: T) => React.ReactNode) {
+function WithLoader<T>({
+  apiUrl,
+  children,
+}: {
+  apiUrl: string;
+  children: (data: T) => React.ReactNode;
+}) {
   const { data, error } = useSWR<T>(apiUrl);
 
   const isLoading = !data && !error;

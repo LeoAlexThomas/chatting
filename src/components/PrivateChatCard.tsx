@@ -9,10 +9,12 @@ import {
   IconChecks,
 } from "@tabler/icons-react";
 import dayjs from "dayjs";
+import { useHover } from "@mantine/hooks";
 
 const PersonChatCard = ({ chat }: { chat: PersonChatInfoInterface }) => {
   const user = chat.user;
   const message = chat.lastMessage;
+  const { hovered, ref: isHoveredRef } = useHover();
 
   const renderLastMessage = () => {
     if (isNil(message)) {
@@ -83,13 +85,21 @@ const PersonChatCard = ({ chat }: { chat: PersonChatInfoInterface }) => {
 
   return (
     <Group
+      ref={isHoveredRef}
       wrap="nowrap"
       gap={16}
       w="100%"
       p={8}
-      bg={message?.isOpened === true ? "transparent" : "primary-gray.1"}
+      bg={
+        hovered
+          ? "primary-gray.2"
+          : message?.isOpened === true
+          ? "transparent"
+          : "primary-gray.1"
+      }
       style={{
         borderRadius: 12,
+        cursor: "pointer",
       }}
     >
       <Avatar
