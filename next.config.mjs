@@ -3,9 +3,9 @@
 const getEnvConfig = () => {
   switch (process.env.ENV) {
     case "dev":
-      return { env: "dev", apiUrl: "http://localhost:8080" };
+      return { env: "dev", apiUrl: "http://localhost:8081/api" };
     case "prod":
-      return { env: "prod", apiUrl: "https://chatting-prod.com" };
+      return { env: "prod", apiUrl: "https://chatting-prod.com/api" };
   }
 };
 

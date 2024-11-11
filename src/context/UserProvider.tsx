@@ -3,6 +3,8 @@ import { UserInterface } from "@/types/user";
 import { Center } from "@mantine/core";
 import { createContext, useContext } from "react";
 import useSWR from "swr";
+import { useLoggedInCheck } from "./LoginCheckProvider";
+import { useRouter } from "next/router";
 
 const dummyUserData: UserInterface = {
   userId: "1",
@@ -13,15 +15,22 @@ const dummyUserData: UserInterface = {
 const UserInfoContext = createContext<UserInterface>(dummyUserData);
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
-  const { data, error } = useSWR<UserInterface>("/user/info");
+  const router = useRouter();
+  const path = router.asPath;
+  const { isLoginChecked } = useLoggedInCheck();
+  const { data, error } = useSWR<UserInterface>("/user/current");
   const isLoading = !data && !error;
 
-  if (isLoading) {
+  if (path.includes("/login")) {
+    return <>{children}</>;
+  }
+
+  if (isLoading || !isLoginChecked) {
     return <CustomLoader />;
   }
 
   if (!data) {
-    return <Center h="100vh">User not found</Center>;
+    return <Center h="100vh">User data not found</Center>;
   }
 
   return (

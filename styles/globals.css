@@ -1,6 +1,10 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --font-mono: ui-monospace, Menlo, Monaco, "Roboto", "Cascadia Mono",
+    "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace",
+    "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Courier New",
+    "Noto Serif", "Koh Santepheap", monospace;
 }
 
 @media (prefers-color-scheme: dark) {
