@@ -7,6 +7,7 @@ import { useState } from "react";
 
 export default function Home() {
   const [searchText, setSearchText] = useState<string>("");
+  const [selectedRoomId, setSelectedRoomId] = useState<number | null>(null);
   return (
     <>
       <Head>
@@ -24,7 +25,7 @@ export default function Home() {
         <Center
           w="100%"
           h="100%"
-          maw={1200}
+          maw={1600}
           mx="auto"
           p={16}
           bg="white"
@@ -48,9 +49,9 @@ export default function Home() {
                 <UserAvatar />
               </Group>
 
-              <ChatList searchText={searchText} />
+              <ChatList searchText={searchText} onSelect={setSelectedRoomId} />
             </Stack>
-            <ChatInfo />
+            <ChatInfo roomId={selectedRoomId} />
           </Group>
         </Center>
       </Box>
