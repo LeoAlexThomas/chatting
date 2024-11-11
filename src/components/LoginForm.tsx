@@ -92,7 +92,7 @@ const LoginForm = ({ onSignUpClicked }: { onSignUpClicked: () => void }) => {
             hForm={hookForm}
             name="password"
             rules={{ required: true }}
-            type={showPassword ? "password" : "text"}
+            type={showPassword ? "text" : "password"}
             title="Password"
             placeholder="Enter your password"
             rightSection={
@@ -101,9 +101,9 @@ const LoginForm = ({ onSignUpClicked }: { onSignUpClicked: () => void }) => {
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (
-                  <IconEye color="black" />
-                ) : (
                   <IconEyeOff color="black" />
+                ) : (
+                  <IconEye color="black" />
                 )}
               </ActionIcon>
             }

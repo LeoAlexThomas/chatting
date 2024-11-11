@@ -1,8 +1,8 @@
 export interface UserInterface {
-  userId: string;
-  userName: string;
+  id: string;
+  name: string;
   mobile: string;
-  userEmail?: string;
+  email?: string;
   profileImage?: string;
   isBlocked?: boolean;
   profileStatus?: string;

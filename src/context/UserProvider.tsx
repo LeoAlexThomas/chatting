@@ -1,15 +1,14 @@
 import CustomLoader from "@/components/Loader";
 import { UserInterface } from "@/types/user";
-import { Center } from "@mantine/core";
 import { createContext, useContext } from "react";
 import useSWR from "swr";
 import { useLoggedInCheck } from "./LoginCheckProvider";
 import { useRouter } from "next/router";
 
 const dummyUserData: UserInterface = {
-  userId: "1",
+  id: "1",
   mobile: "9080805641",
-  userName: "User1",
+  name: "User1",
 };
 
 const UserInfoContext = createContext<UserInterface>(dummyUserData);
@@ -30,7 +29,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   if (!data) {
-    return <Center h="100vh">User data not found</Center>;
+    return <CustomLoader h="100vh" />;
   }
 
   return (
